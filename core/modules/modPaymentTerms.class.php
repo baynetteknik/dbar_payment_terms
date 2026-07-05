@@ -270,6 +270,7 @@ class modPaymentTerms extends DolibarrModules
 		$extrafields->delete('payment_plan_id', 'commande');
 		$extrafields->delete('payment_plan_id', 'propal');
 
-		return 1;
+		$sql = array();
+		return $this->_remove($sql, $options);
 	}
 }
