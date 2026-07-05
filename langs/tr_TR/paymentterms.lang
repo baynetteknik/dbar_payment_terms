@@ -1,0 +1,18 @@
+# Dolibarr language file - tr_TR - paymentterms
+Module500000Name = Gelişmiş Ödeme Planları
+Module500000Desc = Formüller, dinamik vade tarihleri ve otomatik peşinat tahsilatları içeren gelişmiş çoklu taksit şablonları tanımlamanızı sağlar.
+
+PaymentTerms = Ödeme Koşulları
+PaymentTermPlans = Ödeme Planı Şablonları
+PaymentSchedule = Vade Takvimi
+PaymentPlan = Ödeme Planı
+ErrorFailedToGeneratePaymentSchedule = Taksit planı vade takvimi oluşturulurken hata oluştu
+NoPaimementModesDefined = Tanımlı Ödeme Yöntemi Bulunamadı
+BankAccount = Banka Hesabı
+TotalTTC = Toplam KDV Dahil
+RemainToPay = Kalan Borç
+Received = Alınan
+Refunded = İade Edilen
+Change = Para Üstü
+Reported = Ertelenmiş
+PaymentPlanSetup = Gelişmiş Ödeme Koşulları Kurulumu

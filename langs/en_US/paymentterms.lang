@@ -1,0 +1,18 @@
+# Dolibarr language file - en_US - paymentterms
+Module500000Name = Advanced Payment Terms
+Module500000Desc = Define complex multi-installment payment templates using mathematical formulas, maturity calculations, and auto-collection of down-payments.
+
+PaymentTerms = Payment Terms
+PaymentTermPlans = Payment Plan Templates
+PaymentSchedule = Payment Schedule
+PaymentPlan = Payment Plan
+ErrorFailedToGeneratePaymentSchedule = Error occurred while generating payment schedule
+NoPaimementModesDefined = No Payment Methods Defined
+BankAccount = Bank Account
+TotalTTC = Total TTC
+RemainToPay = Remain to Pay
+Received = Received
+Refunded = Refunded
+Change = Change
+Reported = Delayed
+PaymentPlanSetup = Advanced Payment Terms Setup
