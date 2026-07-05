@@ -266,9 +266,9 @@ class modPaymentTerms extends DolibarrModules
 		// We keep tables by default but we can remove extrafields
 		include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
 		$extrafields = new ExtraFields($this->db);
-		$extrafields->deleteExtraField('payment_plan_id', 'facture');
-		$extrafields->deleteExtraField('payment_plan_id', 'commande');
-		$extrafields->deleteExtraField('payment_plan_id', 'propal');
+		$extrafields->delete('payment_plan_id', 'facture');
+		$extrafields->delete('payment_plan_id', 'commande');
+		$extrafields->delete('payment_plan_id', 'propal');
 
 		return 1;
 	}
