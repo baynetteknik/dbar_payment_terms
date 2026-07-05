@@ -243,10 +243,14 @@ class modPaymentTerms extends DolibarrModules
 			return -1;
 		}
 
-		$logData .= date('Y-m-d H:i:s') . " - Init completed successfully\n";
+		$logData .= date('Y-m-d H:i:s') . " - Calling parent _init()...\n";
+		$sql = array();
+		$init_res = $this->_init($sql, $options);
+		$logData .= date('Y-m-d H:i:s') . " - Parent _init() returned: " . var_export($init_res, true) . "\n";
+		$logData .= date('Y-m-d H:i:s') . " - Init completed.\n";
 		file_put_contents($logFile, $logData, FILE_APPEND);
 
-		return 1;
+		return $init_res;
 	}
 
 	/**
