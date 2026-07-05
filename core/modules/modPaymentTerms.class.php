@@ -195,33 +195,56 @@ class modPaymentTerms extends DolibarrModules
 	{
 		global $conf, $langs;
 
+		$logFile = dol_buildpath('/custom/paymentterms/activation.log', 0);
+		$logData = date('Y-m-d H:i:s') . " - Init started\n";
+
 		// Load DDL sql schemas
+		$logData .= date('Y-m-d H:i:s') . " - Loading SQL tables...\n";
 		$result = $this->_load_tables('/paymentterms/sql/');
+		$logData .= date('Y-m-d H:i:s') . " - SQL table load result: " . var_export($result, true) . "\n";
 		if ($result < 0) {
+			$logData .= date('Y-m-d H:i:s') . " - SQL load failed. Error: " . $this->error . "\n";
+			file_put_contents($logFile, $logData, FILE_APPEND);
 			return -1;
 		}
 
 		// Register Extrafields
-		include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
-		$extrafields = new ExtraFields($this->db);
+		$logData .= date('Y-m-d H:i:s') . " - Registering extrafields...\n";
+		try {
+			include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
+			$extrafields = new ExtraFields($this->db);
 
-		// Add payment plan selection extrafield to proposals, orders and invoices
-		$param_query = 'llx_paymentterm_plan:label:rowid:is_active=1';
-		$result1 = $extrafields->addExtraField(
-			'payment_plan_id', "PaymentPlan", 'select', 10, '',
-			'facture', 0, 0, $param_query, '', 1, '', 1, 0, '', '',
-			'paymentterms@paymentterms', 'isModEnabled("paymentterms")'
-		);
-		$result2 = $extrafields->addExtraField(
-			'payment_plan_id', "PaymentPlan", 'select', 10, '',
-			'commande', 0, 0, $param_query, '', 1, '', 1, 0, '', '',
-			'paymentterms@paymentterms', 'isModEnabled("paymentterms")'
-		);
-		$result3 = $extrafields->addExtraField(
-			'payment_plan_id', "PaymentPlan", 'select', 10, '',
-			'propal', 0, 0, $param_query, '', 1, '', 1, 0, '', '',
-			'paymentterms@paymentterms', 'isModEnabled("paymentterms")'
-		);
+			// Add payment plan selection extrafield to proposals, orders and invoices
+			$param_query = 'llx_paymentterm_plan:label:rowid:is_active=1';
+			
+			$result1 = $extrafields->addExtraField(
+				'payment_plan_id', "PaymentPlan", 'select', 10, '',
+				'facture', 0, 0, $param_query, '', 1, '', 1, 0, '', '',
+				'paymentterms@paymentterms', 'isModEnabled("paymentterms")'
+			);
+			$logData .= date('Y-m-d H:i:s') . " - Extrafield facture result: " . var_export($result1, true) . "\n";
+
+			$result2 = $extrafields->addExtraField(
+				'payment_plan_id', "PaymentPlan", 'select', 10, '',
+				'commande', 0, 0, $param_query, '', 1, '', 1, 0, '', '',
+				'paymentterms@paymentterms', 'isModEnabled("paymentterms")'
+			);
+			$logData .= date('Y-m-d H:i:s') . " - Extrafield commande result: " . var_export($result2, true) . "\n";
+
+			$result3 = $extrafields->addExtraField(
+				'payment_plan_id', "PaymentPlan", 'select', 10, '',
+				'propal', 0, 0, $param_query, '', 1, '', 1, 0, '', '',
+				'paymentterms@paymentterms', 'isModEnabled("paymentterms")'
+			);
+			$logData .= date('Y-m-d H:i:s') . " - Extrafield propal result: " . var_export($result3, true) . "\n";
+		} catch (Exception $e) {
+			$logData .= date('Y-m-d H:i:s') . " - Extrafield registry threw exception: " . $e->getMessage() . "\n";
+			file_put_contents($logFile, $logData, FILE_APPEND);
+			return -1;
+		}
+
+		$logData .= date('Y-m-d H:i:s') . " - Init completed successfully\n";
+		file_put_contents($logFile, $logData, FILE_APPEND);
 
 		return 1;
 	}
