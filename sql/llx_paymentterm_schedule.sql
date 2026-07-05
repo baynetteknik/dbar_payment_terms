@@ -1,4 +1,4 @@
-CREATE TABLE llx_paymentterm_schedule (
+CREATE TABLE IF NOT EXISTS llx_paymentterm_schedule (
   rowid integer AUTO_INCREMENT PRIMARY KEY,
   fk_paymentterm_plan integer NOT NULL,
   fk_object integer NOT NULL,
@@ -15,10 +15,9 @@ CREATE TABLE llx_paymentterm_schedule (
   note_private text,
   entity integer DEFAULT 1 NOT NULL,
   datec datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  tms timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
+  tms timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+  UNIQUE KEY uk_paymentterm_schedule_obj_line (object_type, fk_object, line_num),
+  INDEX idx_paymentterm_schedule_due (due_date, status),
+  INDEX idx_paymentterm_schedule_object (object_type, fk_object),
+  INDEX idx_paymentterm_schedule_status (status, entity)
 ) ENGINE=innodb;
-
-ALTER TABLE llx_paymentterm_schedule ADD UNIQUE INDEX uk_paymentterm_schedule_obj_line (object_type, fk_object, line_num);
-ALTER TABLE llx_paymentterm_schedule ADD INDEX idx_paymentterm_schedule_due (due_date, status);
-ALTER TABLE llx_paymentterm_schedule ADD INDEX idx_paymentterm_schedule_object (object_type, fk_object);
-ALTER TABLE llx_paymentterm_schedule ADD INDEX idx_paymentterm_schedule_status (status, entity);

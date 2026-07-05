@@ -1,4 +1,4 @@
-CREATE TABLE llx_paymentterm_plan (
+CREATE TABLE IF NOT EXISTS llx_paymentterm_plan (
   rowid integer AUTO_INCREMENT PRIMARY KEY,
   ref varchar(32) NOT NULL,
   label varchar(128) NOT NULL,
@@ -15,8 +15,7 @@ CREATE TABLE llx_paymentterm_plan (
   datec datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
   tms timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
   fk_user_author integer,
-  fk_user_modif integer
+  fk_user_modif integer,
+  UNIQUE KEY uk_paymentterm_plan_ref (ref, entity),
+  INDEX idx_paymentterm_plan_active (is_active, entity)
 ) ENGINE=innodb;
-
-ALTER TABLE llx_paymentterm_plan ADD UNIQUE INDEX uk_paymentterm_plan_ref (ref, entity);
-ALTER TABLE llx_paymentterm_plan ADD INDEX idx_paymentterm_plan_active (is_active, entity);
